@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import {
     ColumnDef,
     flexRender,
@@ -168,7 +169,7 @@ export function DocumentsList({ className = '', onViewDocument }: DocumentsListP
                 id: 'actions',
                 cell: ({ row }) => (
                     <div className="flex items-center gap-1">
-                        {onViewDocument && (
+                        {onViewDocument ? (
                             <Button
                                 variant="ghost"
                                 size="sm"
@@ -177,6 +178,13 @@ export function DocumentsList({ className = '', onViewDocument }: DocumentsListP
                             >
                                 <Eye className="h-4 w-4" />
                                 <span className="sr-only">View</span>
+                            </Button>
+                        ) : (
+                            <Button asChild variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <Link href={`/landlords/documents/${row.original.id}`}>
+                                    <Eye className="h-4 w-4" />
+                                    <span className="sr-only">View</span>
+                                </Link>
                             </Button>
                         )}
                         <Button

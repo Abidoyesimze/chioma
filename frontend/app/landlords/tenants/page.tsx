@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import {
   User,
   Search,
@@ -685,9 +686,12 @@ export default function TenantsPage() {
 
                     {/* Action */}
                     <td className="px-5 py-4">
-                      <button className="text-[10px] font-bold uppercase tracking-widest text-blue-200/40 border border-white/5 rounded-xl px-4 py-2 hover:text-white hover:bg-blue-600/20 hover:border-blue-500/30 transition-all">
+                      <Link
+                        href={`/landlords/tenants/${tenant.id}`}
+                        className="inline-flex text-[10px] font-bold uppercase tracking-widest text-blue-200/40 border border-white/5 rounded-xl px-4 py-2 hover:text-white hover:bg-blue-600/20 hover:border-blue-500/30 transition-all"
+                      >
                         View Details
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 ))
