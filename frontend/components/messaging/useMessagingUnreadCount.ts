@@ -26,7 +26,13 @@ export function useMessagingUnreadCount() {
     if (isViewingMessages) {
       return 0;
     }
-    return (data ?? []).reduce(
+    const rooms = Array.isArray(data) 
+      ? data 
+      : (data as any)?.data && Array.isArray((data as any).data)
+        ? (data as any).data
+        : [];
+
+    return rooms.reduce(
       (sum: number, room: ChatRoom) => sum + (room.unreadCount ?? 0),
       0,
     );

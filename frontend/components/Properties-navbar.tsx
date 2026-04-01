@@ -75,18 +75,7 @@ const Navbar = () => {
 
         {/* Auth Actions */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link
-            href="/login"
-            className="text-gray-600 hover:text-brand-blue text-sm font-bold transition-colors"
-          >
-            Log In
-          </Link>
-          <Link
-            href="/signup"
-            className="bg-brand-blue hover:bg-brand-blue-dark text-white px-7 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-brand-blue/20 hover:-translate-y-0.5"
-          >
-            Sign Up
-          </Link>
+          {/* Removed login/signup links */}
         </div>
 
         {/* Mobile Menu Button - visible on light nav (text-blue-900), min touch target */}
@@ -125,20 +114,7 @@ const Navbar = () => {
             })}
 
             <div className="pt-4 flex flex-col space-y-4 border-t border-gray-100">
-              <Link
-                href="/login"
-                className="text-gray-700 text-lg font-bold"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Log In
-              </Link>
-              <Link
-                href="/signup"
-                className="bg-brand-blue text-white px-6 py-3 rounded-xl text-center font-bold shadow-lg"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Sign Up
-              </Link>
+              {/* Removed login/signup links */}
             </div>
           </div>
         </div>

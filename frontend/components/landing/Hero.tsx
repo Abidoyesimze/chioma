@@ -3,12 +3,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { CheckCircle2, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { useAuth } from '@/store/authStore';
+import { useAuthRedirect } from '@/hooks/useAuthRedirect';
 
 export default function Hero() {
+  // AUTH DISABLED - useAuthRedirect commented out for development
+  // useAuthRedirect(); // Redirect authenticated users to their dashboard
   const { walletAddress } = useAuth();
+
   return (
     <section className="relative pt-20 pb-32 overflow-hidden">
       {/* Animated background elements */}
@@ -86,13 +90,6 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
           >
-            <Link
-              href="/signup"
-              className="group w-full sm:w-auto bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-            >
-              Get Started Free
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
             <Link
               href="#how-it-works"
               className="w-full sm:w-auto bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/20 transition-all duration-200"

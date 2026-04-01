@@ -49,7 +49,7 @@ export const MOCK_USERS = {
       email: 'james.adebayo@email.com',
       phone: '+234 801 111 2222',
       role: 'LANDLORD' as const,
-      walletAddress: 'GBXKX5CLNRGSMXFSX5CWWVVFKQ7NXRJ5MFRLTOVQCJY47OJJXQ7F2D',
+      walletAddress: 'GABWYJTOT5X5UZM77BAYRAADXACDWT3O57WYMDEOI5F4EBSFATIK6WAM',
       isVerified: true,
     },
     {
@@ -69,7 +69,7 @@ export const MOCK_USERS = {
       email: 'sarah.jenks@email.com',
       phone: '+234 803 333 4444',
       role: 'AGENT' as const,
-      walletAddress: 'GDQFWVYTVWQ7IXVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQVQ3B8C',
+      walletAddress: 'GABWYJTOT5X5UZM77BAYRAADXACDWT3O57WYMDEOI5F4EBSFATIK6WAM',
       isVerified: true,
     },
     {
@@ -90,7 +90,7 @@ export const MOCK_USERS = {
       phone: '+234 800 000 0000',
       role: 'ADMIN' as const,
       walletAddress:
-        'GBUQWP3KXLTEQXDMWQYBTMRPL75EEDHM5UW2HO4MGI7P7D55Z572XL7DQ',
+        'GABWYJTOT5X5UZM77BAYRAADXACDWT3O57WYMDEOI5F4EBSFATIK6WAM',
       isVerified: true,
     },
   ],

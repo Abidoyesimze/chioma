@@ -4,8 +4,12 @@ import Link from 'next/link';
 import { Webhook } from 'lucide-react';
 import { getAdminNavItems } from '@/components/admin-dashboard/navigation';
 import { useAuth } from '@/store/authStore';
+import { useRoleRedirect } from '@/hooks/useRoleRedirect';
 
 export default function AdminHomePage() {
+  // AUTH DISABLED - useRoleRedirect commented out for development
+  // useRoleRedirect(['admin', 'support', 'auditor']);
+
   const { user } = useAuth();
   const navItems = getAdminNavItems(user?.role);
 

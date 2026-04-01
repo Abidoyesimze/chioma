@@ -12,8 +12,12 @@ import {
   loadAgentOnboardingData,
   type AgentOnboardingData,
 } from '@/lib/agent-onboarding';
+import { useRoleRedirect } from '@/hooks/useRoleRedirect';
 
 export default function AgentDashboardPage() {
+  // AUTH DISABLED - useRoleRedirect commented out for development
+  // useRoleRedirect(['agent']);
+
   const [onboarding] = useState<AgentOnboardingData>(loadAgentOnboardingData);
 
   return (

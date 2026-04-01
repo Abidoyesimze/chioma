@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, ReactNode, useRef } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/store/authStore';
 
 interface ProtectedRouteProps {
@@ -11,7 +11,7 @@ interface ProtectedRouteProps {
 /**
  * ProtectedRoute — Client-side auth guard component.
  *
- * Wraps dashboard content and redirects unauthenticated users to /login.
+ * Wraps dashboard content and redirects unauthenticated users to home.
  * Works as a second layer of protection alongside the Next.js middleware.
  *
  * Usage:
@@ -22,16 +22,14 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
-  const pathname = usePathname();
   const hasRedirected = useRef(false);
 
   useEffect(() => {
     if (!loading && !isAuthenticated && !hasRedirected.current) {
       hasRedirected.current = true;
-      const callbackUrl = encodeURIComponent(pathname);
-      router.replace(`/login?callbackUrl=${callbackUrl}`);
+      router.replace('/');
     }
-  }, [isAuthenticated, loading, router, pathname]);
+  }, [isAuthenticated, loading, router]);
 
   // Show a loading skeleton while auth state is being hydrated
   if (loading) {

@@ -7,6 +7,7 @@ import { Sidebar } from '@/components/dashboard/Sidebar';
 import { tenantNavItems } from '@/data/tenants-nav-items';
 import { ClientErrorBoundary } from '@/components/error/ClientErrorBoundary';
 import { useAuth } from '@/store/authStore';
+import WalletConnectButton from '@/components/auth/WalletConnectButton';
 
 export default function TenantDashboardLayout({
   children,
@@ -69,18 +70,17 @@ export default function TenantDashboardLayout({
                 size={20}
                 className="text-blue-200"
               />
-
               {walletAddress ? (
-                <div className="hidden sm:flex items-center justify-center px-4 py-2 rounded-full bg-green-500/20 border border-green-500/50 backdrop-blur-sm">
+                <div className="px-4 py-2.5 rounded-lg bg-green-500/20 border border-green-500/50 backdrop-blur-sm">
                   <p className="text-sm text-green-200 font-mono">
                     {walletAddress.slice(0, 6)}...{walletAddress.slice(-6)}
                   </p>
                 </div>
               ) : (
-                <button className="hidden sm:flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl">
-                  <Wallet size={16} />
-                  <span>Connect Wallet</span>
-                </button>
+                <WalletConnectButton
+                  className="px-6 py-2.5 text-sm"
+                  buttonText="Connect Wallet"
+                />
               )}
 
               <button className="flex items-center justify-center w-10 h-10 bg-white/10 text-blue-300 rounded-full hover:bg-white/20 transition-all border border-white/20">

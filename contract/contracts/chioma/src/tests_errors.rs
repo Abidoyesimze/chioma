@@ -304,21 +304,81 @@ fn test_error_log_limit_returns_most_recent() {
     let op = String::from_str(&env, "op");
 
     // Log 15 errors with distinguishable details
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_0"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_1"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_2"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_3"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_4"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_5"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_6"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_7"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_8"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_9"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_10"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_11"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_12"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_13"));
-    client.log_error(&RentalError::InternalError, &op, &String::from_str(&env, "error_14"));
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_0"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_1"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_2"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_3"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_4"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_5"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_6"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_7"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_8"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_9"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_10"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_11"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_12"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_13"),
+    );
+    client.log_error(
+        &RentalError::InternalError,
+        &op,
+        &String::from_str(&env, "error_14"),
+    );
 
     let logs = client.get_error_logs(&5);
     assert_eq!(logs.len(), 5);

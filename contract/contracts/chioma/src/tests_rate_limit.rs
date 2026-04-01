@@ -408,9 +408,27 @@ fn test_get_block_call_count() {
     let tenant2 = Address::generate(&env);
     let tenant3 = Address::generate(&env);
 
-    client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant1, &payment_token));
-    client.create_agreement(&make_input(&env, "ag2", &landlord, &tenant2, &payment_token));
-    client.create_agreement(&make_input(&env, "ag3", &landlord, &tenant3, &payment_token));
+    client.create_agreement(&make_input(
+        &env,
+        "ag1",
+        &landlord,
+        &tenant1,
+        &payment_token,
+    ));
+    client.create_agreement(&make_input(
+        &env,
+        "ag2",
+        &landlord,
+        &tenant2,
+        &payment_token,
+    ));
+    client.create_agreement(&make_input(
+        &env,
+        "ag3",
+        &landlord,
+        &tenant3,
+        &payment_token,
+    ));
 
     let count = client.get_block_call_count(&String::from_str(&env, "create_agreement"));
     assert_eq!(count, 3);
@@ -472,12 +490,20 @@ fn test_rate_limit_single_call() {
     let payment_token = Address::generate(&env);
 
     let result1 = client.try_create_agreement(&make_input(
-        &env, "agreement1", &landlord, &tenant, &payment_token,
+        &env,
+        "agreement1",
+        &landlord,
+        &tenant,
+        &payment_token,
     ));
     assert!(result1.is_ok());
 
     let result2 = client.try_create_agreement(&make_input(
-        &env, "agreement2", &landlord, &tenant, &payment_token,
+        &env,
+        "agreement2",
+        &landlord,
+        &tenant,
+        &payment_token,
     ));
     assert!(result2.is_err());
 }
@@ -500,7 +526,11 @@ fn test_rate_limit_zero_daily_limit() {
     let payment_token = Address::generate(&env);
 
     let result = client.try_create_agreement(&make_input(
-        &env, "agreement1", &landlord, &tenant, &payment_token,
+        &env,
+        "agreement1",
+        &landlord,
+        &tenant,
+        &payment_token,
     ));
     assert!(result.is_err());
 }
@@ -529,15 +559,12 @@ fn test_rate_limit_per_function() {
     client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant, &payment_token));
     client.create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag3", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag3", &landlord, &tenant, &payment_token));
     assert!(result.is_err());
 
-    let other_count = client.get_user_call_count(
-        &tenant,
-        &String::from_str(&env, "some_other_function"),
-    );
+    let other_count =
+        client.get_user_call_count(&tenant, &String::from_str(&env, "some_other_function"));
     assert!(other_count.is_none());
 }
 
@@ -559,16 +586,36 @@ fn test_rate_limit_independent_users() {
     let tenant_a = Address::generate(&env);
     let tenant_b = Address::generate(&env);
 
-    client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant_a, &payment_token));
-    client.create_agreement(&make_input(&env, "ag2", &landlord, &tenant_a, &payment_token));
+    client.create_agreement(&make_input(
+        &env,
+        "ag1",
+        &landlord,
+        &tenant_a,
+        &payment_token,
+    ));
+    client.create_agreement(&make_input(
+        &env,
+        "ag2",
+        &landlord,
+        &tenant_a,
+        &payment_token,
+    ));
 
     let result_a = client.try_create_agreement(&make_input(
-        &env, "ag3", &landlord, &tenant_a, &payment_token,
+        &env,
+        "ag3",
+        &landlord,
+        &tenant_a,
+        &payment_token,
     ));
     assert!(result_a.is_err());
 
     let result_b = client.try_create_agreement(&make_input(
-        &env, "ag4", &landlord, &tenant_b, &payment_token,
+        &env,
+        "ag4",
+        &landlord,
+        &tenant_b,
+        &payment_token,
     ));
     assert!(result_b.is_ok());
 }
@@ -593,17 +640,29 @@ fn test_rate_limit_block_limit_multi_user() {
     let tenant_c = Address::generate(&env);
 
     let result_a = client.try_create_agreement(&make_input(
-        &env, "ag1", &landlord, &tenant_a, &payment_token,
+        &env,
+        "ag1",
+        &landlord,
+        &tenant_a,
+        &payment_token,
     ));
     assert!(result_a.is_ok());
 
     let result_b = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant_b, &payment_token,
+        &env,
+        "ag2",
+        &landlord,
+        &tenant_b,
+        &payment_token,
     ));
     assert!(result_b.is_ok());
 
     let result_c = client.try_create_agreement(&make_input(
-        &env, "ag3", &landlord, &tenant_c, &payment_token,
+        &env,
+        "ag3",
+        &landlord,
+        &tenant_c,
+        &payment_token,
     ));
     assert!(result_c.is_err());
 }
@@ -626,11 +685,35 @@ fn test_rate_limit_user_call_count_per_user() {
     let tenant_a = Address::generate(&env);
     let tenant_b = Address::generate(&env);
 
-    client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant_a, &payment_token));
-    client.create_agreement(&make_input(&env, "ag2", &landlord, &tenant_a, &payment_token));
-    client.create_agreement(&make_input(&env, "ag3", &landlord, &tenant_a, &payment_token));
+    client.create_agreement(&make_input(
+        &env,
+        "ag1",
+        &landlord,
+        &tenant_a,
+        &payment_token,
+    ));
+    client.create_agreement(&make_input(
+        &env,
+        "ag2",
+        &landlord,
+        &tenant_a,
+        &payment_token,
+    ));
+    client.create_agreement(&make_input(
+        &env,
+        "ag3",
+        &landlord,
+        &tenant_a,
+        &payment_token,
+    ));
 
-    client.create_agreement(&make_input(&env, "ag4", &landlord, &tenant_b, &payment_token));
+    client.create_agreement(&make_input(
+        &env,
+        "ag4",
+        &landlord,
+        &tenant_b,
+        &payment_token,
+    ));
 
     let fn_name = String::from_str(&env, "create_agreement");
 
@@ -664,23 +747,20 @@ fn test_rate_limit_cooldown_partial_wait() {
     let landlord = Address::generate(&env);
     let payment_token = Address::generate(&env);
 
-    let result1 = client.try_create_agreement(&make_input(
-        &env, "ag1", &landlord, &tenant, &payment_token,
-    ));
+    let result1 =
+        client.try_create_agreement(&make_input(&env, "ag1", &landlord, &tenant, &payment_token));
     assert!(result1.is_ok());
 
     env.ledger().with_mut(|li| li.sequence_number += 5);
 
-    let result2 = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant, &payment_token,
-    ));
+    let result2 =
+        client.try_create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
     assert!(result2.is_err());
 
     env.ledger().with_mut(|li| li.sequence_number += 5);
 
-    let result3 = client.try_create_agreement(&make_input(
-        &env, "ag3", &landlord, &tenant, &payment_token,
-    ));
+    let result3 =
+        client.try_create_agreement(&make_input(&env, "ag3", &landlord, &tenant, &payment_token));
     assert!(result3.is_ok());
 }
 
@@ -705,9 +785,8 @@ fn test_rate_limit_cooldown_exact_boundary() {
 
     env.ledger().with_mut(|li| li.sequence_number += 10);
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
     assert!(result.is_ok());
 }
 
@@ -733,15 +812,13 @@ fn test_rate_limit_multiple_cooldowns() {
     env.ledger().with_mut(|li| li.sequence_number += 5);
     client.create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag3", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag3", &landlord, &tenant, &payment_token));
     assert!(result.is_err());
 
     env.ledger().with_mut(|li| li.sequence_number += 5);
-    let result2 = client.try_create_agreement(&make_input(
-        &env, "ag4", &landlord, &tenant, &payment_token,
-    ));
+    let result2 =
+        client.try_create_agreement(&make_input(&env, "ag4", &landlord, &tenant, &payment_token));
     assert!(result2.is_ok());
 }
 
@@ -770,9 +847,8 @@ fn test_rate_limit_reset_exact_boundary() {
 
     env.ledger().with_mut(|li| li.sequence_number += 17280);
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
     assert!(result.is_ok());
 }
 
@@ -797,9 +873,8 @@ fn test_rate_limit_reset_partial_day() {
 
     env.ledger().with_mut(|li| li.sequence_number += 17279);
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
     assert!(result.is_err());
 }
 
@@ -853,8 +928,20 @@ fn test_reset_user_rate_limit_independent() {
     let tenant_b = Address::generate(&env);
     let fn_name = String::from_str(&env, "create_agreement");
 
-    client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant_a, &payment_token));
-    client.create_agreement(&make_input(&env, "ag2", &landlord, &tenant_b, &payment_token));
+    client.create_agreement(&make_input(
+        &env,
+        "ag1",
+        &landlord,
+        &tenant_a,
+        &payment_token,
+    ));
+    client.create_agreement(&make_input(
+        &env,
+        "ag2",
+        &landlord,
+        &tenant_b,
+        &payment_token,
+    ));
 
     client.reset_user_rate_limit(&tenant_a, &fn_name);
 
@@ -887,9 +974,8 @@ fn test_rate_limit_error_logged_on_exceed() {
 
     client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant, &payment_token));
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
     assert!(result.is_err());
 
     let op = String::from_str(&env, "create_agreement");
@@ -921,18 +1007,38 @@ fn test_rate_limit_across_blocks() {
     let tenant2 = Address::generate(&env);
     let tenant3 = Address::generate(&env);
 
-    client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant1, &payment_token));
-    client.create_agreement(&make_input(&env, "ag2", &landlord, &tenant2, &payment_token));
+    client.create_agreement(&make_input(
+        &env,
+        "ag1",
+        &landlord,
+        &tenant1,
+        &payment_token,
+    ));
+    client.create_agreement(&make_input(
+        &env,
+        "ag2",
+        &landlord,
+        &tenant2,
+        &payment_token,
+    ));
 
     let result = client.try_create_agreement(&make_input(
-        &env, "ag3", &landlord, &tenant3, &payment_token,
+        &env,
+        "ag3",
+        &landlord,
+        &tenant3,
+        &payment_token,
     ));
     assert!(result.is_err());
 
     env.ledger().with_mut(|li| li.sequence_number += 1);
 
     let result2 = client.try_create_agreement(&make_input(
-        &env, "ag4", &landlord, &tenant3, &payment_token,
+        &env,
+        "ag4",
+        &landlord,
+        &tenant3,
+        &payment_token,
     ));
     assert!(result2.is_ok());
 }
@@ -958,26 +1064,22 @@ fn test_rate_limit_with_pause_state() {
 
     client.pause(&String::from_str(&env, "maintenance"));
 
-    let paused_result = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant, &payment_token,
-    ));
+    let paused_result =
+        client.try_create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
     assert!(paused_result.is_err());
 
     client.unpause();
 
-    let result2 = client.try_create_agreement(&make_input(
-        &env, "ag3", &landlord, &tenant, &payment_token,
-    ));
+    let result2 =
+        client.try_create_agreement(&make_input(&env, "ag3", &landlord, &tenant, &payment_token));
     assert!(result2.is_ok());
 
-    let result3 = client.try_create_agreement(&make_input(
-        &env, "ag4", &landlord, &tenant, &payment_token,
-    ));
+    let result3 =
+        client.try_create_agreement(&make_input(&env, "ag4", &landlord, &tenant, &payment_token));
     assert!(result3.is_ok());
 
-    let result4 = client.try_create_agreement(&make_input(
-        &env, "ag5", &landlord, &tenant, &payment_token,
-    ));
+    let result4 =
+        client.try_create_agreement(&make_input(&env, "ag5", &landlord, &tenant, &payment_token));
     assert!(result4.is_err());
 }
 
@@ -1000,9 +1102,8 @@ fn test_rate_limit_cooldown_and_daily_combined() {
 
     client.create_agreement(&make_input(&env, "ag1", &landlord, &tenant, &payment_token));
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag2", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag2", &landlord, &tenant, &payment_token));
     assert!(result.is_err());
 
     env.ledger().with_mut(|li| li.sequence_number += 5);
@@ -1012,9 +1113,8 @@ fn test_rate_limit_cooldown_and_daily_combined() {
     client.create_agreement(&make_input(&env, "ag3", &landlord, &tenant, &payment_token));
 
     env.ledger().with_mut(|li| li.sequence_number += 5);
-    let result4 = client.try_create_agreement(&make_input(
-        &env, "ag4", &landlord, &tenant, &payment_token,
-    ));
+    let result4 =
+        client.try_create_agreement(&make_input(&env, "ag4", &landlord, &tenant, &payment_token));
     assert!(result4.is_err());
 }
 
@@ -1068,9 +1168,8 @@ fn test_rate_limit_zero_block_limit() {
     let landlord = Address::generate(&env);
     let payment_token = Address::generate(&env);
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag1", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag1", &landlord, &tenant, &payment_token));
     assert!(result.is_err());
 }
 
@@ -1102,8 +1201,7 @@ fn test_rate_limit_config_update() {
     };
     client.set_rate_limit_config(&config2);
 
-    let result = client.try_create_agreement(&make_input(
-        &env, "ag4", &landlord, &tenant, &payment_token,
-    ));
+    let result =
+        client.try_create_agreement(&make_input(&env, "ag4", &landlord, &tenant, &payment_token));
     assert!(result.is_err());
 }

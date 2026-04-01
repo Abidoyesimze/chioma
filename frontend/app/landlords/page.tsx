@@ -7,6 +7,7 @@ import KPICard from '@/components/landlord-dashboard/KPICard';
 import RecentActivity from '@/components/dashboard/RecentActivity';
 import PropertyPortfolio from '@/components/dashboard/PropertyPortfolio';
 import dynamic from 'next/dynamic';
+import { useRoleRedirect } from '@/hooks/useRoleRedirect';
 
 const RevenueChart = dynamic(
   () => import('@/components/dashboard/RevenueChart'),
@@ -19,6 +20,9 @@ const RevenueChart = dynamic(
 );
 
 export default function DashboardPage() {
+  // AUTH DISABLED - useRoleRedirect commented out for development
+  // useRoleRedirect(['landlord']);
+
   return (
     <div className="space-y-8">
       {/* Header */}

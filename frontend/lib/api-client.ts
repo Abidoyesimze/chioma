@@ -71,9 +71,10 @@ class ApiClient {
     localStorage.removeItem(AUTH_STORAGE_KEYS.ACCESS_TOKEN);
     localStorage.removeItem(AUTH_STORAGE_KEYS.LEGACY_ACCESS_TOKEN);
 
-    if (window.location.pathname !== '/login') {
-      window.location.assign('/login');
-    }
+    // DISABLED FOR DEVELOPMENT - Prevent aggressive redirect to home page
+    // if (window.location.pathname !== '/') {
+    //   window.location.assign('/');
+    // }
   }
 
   private async request<T>(

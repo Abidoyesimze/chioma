@@ -1,10 +1,10 @@
 #![no_std]
 
+mod errors;
+mod events;
 mod profile;
 mod storage;
 mod types;
-mod errors;
-mod events;
 
 #[cfg(test)]
 mod tests_profile_management;

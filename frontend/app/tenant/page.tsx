@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import { Calendar, FileText, ArrowUpRight, TrendingUp } from 'lucide-react';
 import { MicroCharts } from '@/components/dashboard/MicroCharts';
 import { TenantOnboardingBanner } from '@/components/tenant/TenantOnboardingBanner';
+import { useRoleRedirect } from '@/hooks/useRoleRedirect';
 
 const mockAgreements = [
   {
@@ -30,6 +33,9 @@ const mockAgreements = [
 const agreements = process.env.NODE_ENV === 'production' ? [] : mockAgreements;
 
 export default function TenantDashboardOverview() {
+  // AUTH DISABLED - useRoleRedirect commented out for development
+  // useRoleRedirect(['tenant']);
+
   return (
     <div className="space-y-6 sm:space-y-8 pb-10">
       <TenantOnboardingBanner />

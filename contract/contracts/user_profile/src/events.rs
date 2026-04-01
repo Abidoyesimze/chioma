@@ -1,5 +1,5 @@
-use soroban_sdk::{contractevent, Address, Bytes, Env};
 use crate::types::AccountType;
+use soroban_sdk::{contractevent, Address, Bytes, Env};
 
 #[contractevent(topics = ["profile", "created"])]
 pub struct ProfileCreated {
@@ -42,7 +42,12 @@ pub struct Initialized {
 }
 
 /// Profile created event
-pub fn profile_created(env: &Env, account_id: Address, account_type: AccountType, data_hash: Bytes) {
+pub fn profile_created(
+    env: &Env,
+    account_id: Address,
+    account_type: AccountType,
+    data_hash: Bytes,
+) {
     ProfileCreated {
         account_id,
         account_type,
@@ -52,7 +57,12 @@ pub fn profile_created(env: &Env, account_id: Address, account_type: AccountType
 }
 
 /// Profile updated event
-pub fn profile_updated(env: &Env, account_id: Address, account_type: AccountType, data_hash: Bytes) {
+pub fn profile_updated(
+    env: &Env,
+    account_id: Address,
+    account_type: AccountType,
+    data_hash: Bytes,
+) {
     ProfileUpdated {
         account_id,
         account_type,

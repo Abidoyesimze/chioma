@@ -143,7 +143,12 @@ export const useAuthStore = create<AuthStore>()(
       hydrate: () => {
         const stored = readStoredAuth();
         set((state) => {
-          state.user = stored.user;
+          const user = stored.user;
+          // FORCED TO ADMIN FOR DEVELOPMENT - Global bypass for all admin pages
+          if (user && process.env.NODE_ENV !== 'production') {
+            user.role = 'admin';
+          }
+          state.user = user;
           state.accessToken = stored.accessToken;
           state.refreshToken = stored.refreshToken;
           state.isAuthenticated = stored.isAuthenticated;
@@ -157,6 +162,10 @@ export const useAuthStore = create<AuthStore>()(
        * when the backend response is already available).
        */
       setTokens: (accessToken: string, refreshToken: string, user: User) => {
+        // FORCED TO ADMIN FOR DEVELOPMENT - Global bypass for all admin pages
+        if (user && process.env.NODE_ENV !== 'production') {
+          user.role = 'admin';
+        }
         persistAuth(accessToken, refreshToken, user);
         set((state) => {
           state.user = user;

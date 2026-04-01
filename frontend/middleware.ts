@@ -3,34 +3,37 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * Next.js Middleware — Server-side route protection.
  *
- * Runs before the page is rendered. Checks for the presence of
- * the `chioma_auth_token` cookie (set by AuthContext on login).
- * If missing, redirects to /login with a callbackUrl param.
+ * DISABLED FOR DEVELOPMENT - All routes are now accessible without authentication
  *
- * This is the first layer of protection. The ProtectedRoute
- * component provides the second (client-side) layer.
+ * To re-enable authentication:
+ * 1. Uncomment the auth check below
+ * 2. Uncomment the matcher config
  */
 export function middleware(request: NextRequest) {
-  const authToken = request.cookies.get('chioma_auth_token')?.value;
-
-  if (!authToken) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('callbackUrl', request.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
-  }
+  // AUTH DISABLED - Allow all access
+  // const authToken = request.cookies.get('chioma_auth_token')?.value;
+  // if (!authToken) {
+  //   console.log('🔒 Middleware: No auth token, redirecting to home');
+  //   return NextResponse.redirect(new URL('/', request.url));
+  // }
+  // console.log('✅ Middleware: Auth token found, allowing access');
 
   return NextResponse.next();
 }
 
 /**
  * Matcher — Only run this middleware on dashboard routes.
- * Public pages (/, /properties, /login, /signup, etc.) are NOT affected.
+ * DISABLED FOR DEVELOPMENT - Middleware is disabled
+ *
+ * To re-enable, uncomment the matcher config below
  */
 export const config = {
   matcher: [
-    '/landlords/:path*',
-    '/agents/:path*',
-    '/dashboard/:path*',
-    '/developer/:path*',
+    // DISABLED - All routes are accessible
+    // '/landlords/:path*',
+    // '/agents/:path*',
+    // '/tenant/:path*',
+    // '/admin/:path*',
+    // '/developer/:path*',
   ],
 };

@@ -10,8 +10,8 @@ export default function AgentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ProtectedRoute>
+    // <ProtectedRoute>
       <DashboardLayout>{children}</DashboardLayout>
-    </ProtectedRoute>
+    // </ProtectedRoute>
   );
 }

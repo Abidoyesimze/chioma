@@ -36,13 +36,16 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     pageTitle = 'Dispute Detail';
   }
 
-  // Role-based access
+  // Role-based access - FORCED TO TRUE FOR DEVELOPMENT
+  const canAccessAdmin = true;
+  /* 
   const canAccessAdmin = ['admin', 'support', 'auditor'].includes(
     user?.role ?? '',
   );
+  */
 
   return (
-    <ProtectedRoute>
+    // <ProtectedRoute>
       <div className="flex h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white">
         <AdminSidebar />
 
@@ -80,6 +83,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </ClientErrorBoundary>
         </div>
       </div>
-    </ProtectedRoute>
+    // {/* </ProtectedRoute> */}
   );
 }

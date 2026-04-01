@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pageTitle = pageTitleMap[pathname] ?? 'Dashboard';
 
   return (
-    <ProtectedRoute>
+    // <ProtectedRoute>
       <div className="flex h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-x-hidden">
         <Sidebar />
         <div className="flex-1 flex flex-col">
@@ -43,6 +43,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </ClientErrorBoundary>
         </div>
       </div>
-    </ProtectedRoute>
+    // </ProtectedRoute>
   );
 }

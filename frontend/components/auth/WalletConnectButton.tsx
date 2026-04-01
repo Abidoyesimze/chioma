@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/store/authStore';
 import {
   initializeStellarWalletsKit,
@@ -8,6 +9,7 @@ import {
 } from '@/lib/stellar-wallets-kit';
 import toast from 'react-hot-toast';
 import { requestChallenge, verifySignature } from '@/lib/stellar-auth';
+import { detectRoleFromWallet } from '@/lib/navigation/detect-user-role';
 import * as StellarSdk from '@stellar/stellar-sdk';
 
 interface WalletConnectButtonProps {
@@ -22,6 +24,7 @@ export default function WalletConnectButton({
   buttonText = 'Connect Wallet',
 }: WalletConnectButtonProps) {
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const { setTokens, setWalletAddress } = useAuth();
   const isInitializedRef = useRef(false);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -87,11 +90,47 @@ export default function WalletConnectButton({
 
           // Manage session state
           if (result.accessToken && result.refreshToken && result.user) {
-            setTokens(result.accessToken, result.refreshToken, result.user);
+            let userWithRole = result.user;
+
+            // Ensure user has a role - detect if missing
+            if (!userWithRole.role) {
+              toast.loading('Detecting user role...', { id: 'role-detect' });
+              const detectedRole = await detectRoleFromWallet(address);
+              toast.dismiss('role-detect');
+
+              if (detectedRole) {
+                userWithRole = { ...userWithRole, role: detectedRole as any };
+              } else {
+                // No role found - this shouldn't happen in production
+                // but handle gracefully
+                toast.error('Unable to determine your role. Please try again.');
+                setIsConnecting(false);
+                return;
+              }
+            }
+
+            setTokens(result.accessToken, result.refreshToken, userWithRole);
             setWalletAddress(address);
             toast.success('Successfully logged in with Wallet!');
+
+            console.log('✅ Auth tokens set. User role:', userWithRole.role);
+
+            // Call onSuccess callback if provided
             if (onSuccess) {
               onSuccess();
+            } else {
+              // Navigate to role-based dashboard using Next.js router
+              setTimeout(() => {
+                const dashboardRoute = userWithRole.role === 'tenant' 
+                  ? '/tenant'
+                  : userWithRole.role === 'landlord'
+                    ? '/landlords'
+                    : userWithRole.role === 'agent'
+                      ? '/agents'
+                      : '/admin';
+                console.log('🚀 Navigating to:', dashboardRoute);
+                router.push(dashboardRoute);
+              }, 500); // Small delay to show success message
             }
           } else {
             throw new Error('Invalid authentication response');

@@ -162,6 +162,26 @@ const mockData: Record<string, unknown> = {
       },
     ],
   },
+
+  // Messaging Rooms
+  '/messaging/rooms': {
+    data: [
+      {
+        id: 'room-001',
+        name: 'Chioma Okafor',
+        lastMessage: 'The lease agreement looks good.',
+        unreadCount: 2,
+        updatedAt: '2026-03-31T14:20:00Z',
+      },
+      {
+        id: 'room-002',
+        name: 'James Adebayo',
+        lastMessage: 'When can I expect the maintenance team?',
+        unreadCount: 0,
+        updatedAt: '2026-03-30T10:15:00Z',
+      },
+    ],
+  },
 };
 
 // Pattern matching for dynamic routes
@@ -269,8 +289,8 @@ export function getMockData(endpoint: string): unknown {
     }
   }
 
-  // Default response for unknown endpoints
-  return { data: [] };
+  // Default response for unknown endpoints - return flat array to prevent crashes
+  return [];
 }
 
 export function shouldUseMockApi(): boolean {

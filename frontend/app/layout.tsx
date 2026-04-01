@@ -39,7 +39,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
       </head>
 
-      <body className="antialiased font-sans bg-linear-to-br from-slate-900 via-blue-900 to-slate-900">
+      <body
+        suppressHydrationWarning
+        className="font-sans bg-linear-to-br from-slate-900 via-blue-900 to-slate-900"
+      >
         {/* Accessibility: skip link */}
         <a href="#main-content" className="skip-link">
           Skip to main content
