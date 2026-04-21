@@ -116,7 +116,7 @@ export default function PropertyListing() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+      <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
         <Navbar theme="dark" />
         {/* Header/Search Bar */}
         <header
@@ -261,7 +261,7 @@ export default function PropertyListing() {
         </header>
 
         {/* Main Content */}
-        <div className="flex h-[calc(100vh-50px)] overflow-hidden">
+        <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Listings Panel */}
           <div
             className="overflow-y-auto transition-all duration-500 ease-in-out bg-slate-900/50"
