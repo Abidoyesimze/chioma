@@ -20,6 +20,7 @@ import { RentalUnit } from './entities/rental-unit.entity';
 import { PropertyListingDraft } from './entities/property-listing-draft.entity';
 import { User, UserRole, AuthMethod } from '../users/entities/user.entity';
 import { KycStatus } from '../kyc/kyc-status.enum';
+import { FraudHooksService } from '../fraud/fraud-hooks.service';
 
 describe('PropertiesService', () => {
   let service: PropertiesService;
@@ -183,6 +184,10 @@ describe('PropertiesService', () => {
     remove: jest.fn(),
   };
 
+  const mockFraudHooksService = {
+    onListingPublished: jest.fn().mockResolvedValue(undefined),
+  };
+
   beforeEach(async () => {
     mockCacheService.getOrSet.mockImplementation(
       async (_key: string, factory: () => Promise<unknown>) => factory(),
@@ -217,6 +222,10 @@ describe('PropertiesService', () => {
         {
           provide: CacheService,
           useValue: mockCacheService,
+        },
+        {
+          provide: FraudHooksService,
+          useValue: mockFraudHooksService,
         },
       ],
     }).compile();
@@ -541,6 +550,7 @@ describe('PropertiesService', () => {
     });
 
     it('should strip verificationStatus for non-admin owners', async () => {
+      const ownerUser = { ...mockOwner, role: UserRole.USER };
       const draft = { ...mockProperty, verificationStatus: null };
       mockPropertyRepository.findOne.mockResolvedValue(draft);
       mockPropertyRepository.save.mockImplementation((p) => Promise.resolve(p));
@@ -548,7 +558,7 @@ describe('PropertiesService', () => {
       await service.update(
         'property-id',
         { verificationStatus: 'verified', title: 'T' },
-        mockOwner,
+        ownerUser,
       );
 
       expect(mockPropertyRepository.save).toHaveBeenCalledWith(
@@ -609,6 +619,9 @@ describe('PropertiesService', () => {
       const result = await service.publish('property-id', mockOwner);
 
       expect(result.status).toBe(ListingStatus.PUBLISHED);
+      expect(mockFraudHooksService.onListingPublished).toHaveBeenCalledWith(
+        'property-id',
+      );
     });
 
     it('should throw BadRequestException if already published', async () => {
