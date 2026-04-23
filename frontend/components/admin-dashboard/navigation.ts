@@ -2,6 +2,7 @@
 
 import {
   Anchor,
+  Award,
   BarChart3,
   Blocks,
   Gavel,
@@ -69,6 +70,12 @@ const adminNavItems: AdminNavItem[] = [
     icon: Gavel,
     label: 'Disputes Dashboard',
     href: '/admin/disputes',
+    visibleFor: ['admin'],
+  },
+  {
+    icon: Award,
+    label: 'Arbiters Management',
+    href: '/admin/arbiters',
     visibleFor: ['admin'],
   },
   {

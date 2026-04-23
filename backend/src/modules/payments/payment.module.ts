@@ -15,11 +15,14 @@ import { PaymentSchedule } from './entities/payment-schedule.entity';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { UsersModule } from '../users/users.module';
 import { StellarModule } from '../stellar/stellar.module';
+import { User } from '../users/entities/user.entity';
+import { AdminRefundsController } from './admin-refunds.controller';
+import { AdminRefundsService } from './admin-refunds.service';
 import { FraudModule } from '../fraud/fraud.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Payment, PaymentMethod, PaymentSchedule]),
+    TypeOrmModule.forFeature([Payment, PaymentMethod, PaymentSchedule, User]),
     NotificationsModule,
     UsersModule,
     StellarModule,
@@ -31,8 +34,9 @@ import { FraudModule } from '../fraud/fraud.module';
     PaymentMethodController,
     PaymentScheduleController,
     PaymentWebhookController,
+    AdminRefundsController,
   ],
-  providers: [PaymentService, PaymentGatewayService],
+  providers: [PaymentService, PaymentGatewayService, AdminRefundsService],
   exports: [PaymentService, PaymentGatewayService],
 })
 export class PaymentModule {}
